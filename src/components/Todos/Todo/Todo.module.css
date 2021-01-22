@@ -1,0 +1,16 @@
+.todo {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  margin: 0;
+  font-size: 3.2rem;
+}
+
+.completed {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.buttons > button:not(:first-of-type) {
+  margin-left: 0.5rem;
+}

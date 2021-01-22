@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import * as Ably from "ably";
+import { nanoid } from "nanoid";
+import styles from "./App.module.css";
+import { TodoList } from "./containers/TodoList/TodoList";
+import { AblyProvider } from "./providers/AblyProvider";
+
+// Inititialize Ably
+const clientId = nanoid(); // Send med clientid for å ikke hente egne meldinger;
+var ably = new Ably.Realtime({
+  key: "GmwGng.k0pRQQ:bNFOMg1effQwtr3c",
+  clientId,
+});
+var channel = ably.channels.get("todos");
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AblyProvider channel={channel} clientId={clientId}>
+      <div className={styles.container}>
+        <div>
+          <header className={styles.header}>
+            <h1>TODO</h1>
+          </header>
+          <main>
+            <TodoList />
+          </main>
+        </div>
+      </div>
+    </AblyProvider>
   );
 }
 
