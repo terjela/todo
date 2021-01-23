@@ -8,10 +8,11 @@ import { AblyProvider } from "./providers/AblyProvider";
 // Inititialize Ably
 const clientId = nanoid(); // Send med clientid for å ikke hente egne meldinger;
 var ably = new Ably.Realtime({
-  key: "GmwGng.k0pRQQ:bNFOMg1effQwtr3c",
+  key: "GmwGng.wjDtog:hrBj5Swnt3HguqHJ",
   clientId,
 });
-var channel = ably.channels.get("todos");
+const channel = ably.channels.get("todos");
+channel.presence.enter("thisCouldBeAUserName");
 
 function App() {
   return (

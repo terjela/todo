@@ -12,12 +12,14 @@ export interface Todo {
 export const useTodos = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const { db } = useIndexedDb();
-  const { channel, clientId } = useAbly();
+  const { channel, clientId, connectedUsers } = useAbly();
+
+  const shouldSync = connectedUsers > 1;
 
   const addTodo = (newTodo: Todo, skipMessage?: boolean) => {
     setTodos([...todos, newTodo]);
     db?.add("todo", newTodo);
-    if (!skipMessage) {
+    if (!skipMessage && shouldSync) {
       channel.publish("add_todo", newTodo);
     }
   };
@@ -25,7 +27,7 @@ export const useTodos = () => {
   const removeTodo = (todoToDelete: Todo, skipMessage?: boolean) => {
     setTodos(todos.filter((todo) => todo.id !== todoToDelete.id));
     db?.delete("todo", todoToDelete.id);
-    if (!skipMessage) {
+    if (!skipMessage && shouldSync) {
       channel.publish("remove_todo", todoToDelete);
     }
   };
@@ -37,7 +39,7 @@ export const useTodos = () => {
       )
     );
     db?.put("todo", { ...todoToComplete, completed: true });
-    if (!skipMessage) {
+    if (!skipMessage && shouldSync) {
       channel.publish("complete_todo", todoToComplete);
     }
   };
@@ -73,8 +75,8 @@ export const useTodos = () => {
         }
       });
     };
+    shouldSync && subscribe();
 
-    subscribe();
     return () => {
       channel.unsubscribe();
     };
@@ -85,5 +87,6 @@ export const useTodos = () => {
     addTodo,
     removeTodo,
     completeTodo,
+    connectedUsers,
   };
 };

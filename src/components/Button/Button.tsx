@@ -1,10 +1,8 @@
 import styles from "./Button.module.css";
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  inverse?: boolean;
-}
-
-export const Button = ({ inverse, ...props }: Props) => (
+export const Button = ({
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
   <button className={styles.button} {...props}>
     {props.children}
   </button>

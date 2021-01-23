@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Todo as TodoType } from "../../../hooks/useTodos";
 import { Button } from "../../Button/Button";
 import styles from "./Todo.module.css";
@@ -8,7 +9,7 @@ interface Props {
   completeTodo(id: string): void;
 }
 
-export const Todo = ({ todo, removeTodo, completeTodo }: Props) => (
+export const Todo = memo(({ todo, removeTodo, completeTodo }: Props) => (
   <li className={styles.todo}>
     <span className={todo.completed ? styles.completed : undefined}>
       {todo.text}
@@ -20,4 +21,4 @@ export const Todo = ({ todo, removeTodo, completeTodo }: Props) => (
       <Button onClick={() => removeTodo(todo.id)}>SLETT</Button>
     </div>
   </li>
-);
+));
