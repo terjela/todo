@@ -16,10 +16,10 @@ interface TodoDB extends DBSchema {
 
 export const useIndexedDb = () => {
   const [db, setDb] = useState<IDBPDatabase<TodoDB>>();
-  const [status, setStatus] = useState<Status>("loading");
+  const [status, setStatus] = useState<Status>("loading"); // Ikke i bruk
 
   useEffect(() => {
-    openDB<TodoDB>(dbName, 1, {
+    openDB<TodoDB>(dbName, 2, {
       upgrade(db) {
         db.createObjectStore(storeName, { keyPath: "id" });
       },

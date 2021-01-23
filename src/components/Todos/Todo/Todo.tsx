@@ -17,7 +17,6 @@ export const Todo = ({ todo, removeTodo, completeTodo }: Props) => (
       {!todo.completed && (
         <Button onClick={() => completeTodo(todo.id)}>UTFØR</Button>
       )}
-
       <Button onClick={() => removeTodo(todo.id)}>SLETT</Button>
     </div>
   </li>

@@ -6,6 +6,7 @@ export interface Todo {
   id: string;
   text: string;
   completed?: boolean;
+  created: Date;
 }
 
 export const useTodos = () => {
@@ -51,7 +52,10 @@ export const useTodos = () => {
     const subscribe = async () => {
       await channel.subscribe((msg) => {
         if (msg.clientId !== clientId) {
-          const todo = msg.data as Todo;
+          const todo = {
+            ...msg.data,
+            created: new Date(msg.data.created),
+          } as Todo;
           switch (msg.name) {
             case "add_todo":
               addTodo(todo, true);

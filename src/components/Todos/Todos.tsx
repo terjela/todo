@@ -11,14 +11,17 @@ interface Props {
 export const Todos = ({ todos, removeTodo, completeTodo }: Props) => {
   return (
     <ul className={styles.todoList}>
-      {todos.map((todo) => (
-        <Todo
-          key={todo.id}
-          todo={todo}
-          removeTodo={removeTodo}
-          completeTodo={completeTodo}
-        />
-      ))}
+      {todos
+        .sort((a, b) => a.created.getTime() - b.created.getTime())
+        .sort((a, b) => (a.completed && !b.completed ? 1 : -1))
+        .map((todo) => (
+          <Todo
+            key={todo.id}
+            todo={todo}
+            removeTodo={removeTodo}
+            completeTodo={completeTodo}
+          />
+        ))}
     </ul>
   );
 };

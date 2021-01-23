@@ -8,7 +8,7 @@ export const TodoList = () => {
   const { todos, addTodo, removeTodo, completeTodo } = useTodos();
 
   const handleAddTodo = (text: string) => {
-    const newTodo: Todo = { id: nanoid(), text };
+    const newTodo: Todo = { id: nanoid(), text, created: new Date() };
     addTodo(newTodo);
   };
 
