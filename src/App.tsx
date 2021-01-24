@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import styles from "./App.module.css";
 import { TodoList } from "./containers/TodoList/TodoList";
 import { AblyProvider } from "./providers/AblyProvider";
+import { IndexedDBProvider } from "./providers/IndexedDBProvider";
 
 // Inititialize Ably
 const clientId = nanoid(); // Send med clientid for å ikke hente egne meldinger;
@@ -16,18 +17,20 @@ channel.presence.enter("thisCouldBeAUserName");
 
 function App() {
   return (
-    <AblyProvider channel={channel} clientId={clientId}>
-      <div className={styles.container}>
-        <div>
-          <header className={styles.header}>
-            <h1>TODO</h1>
-          </header>
-          <main>
-            <TodoList />
-          </main>
+    <IndexedDBProvider>
+      <AblyProvider channel={channel} clientId={clientId}>
+        <div className={styles.container}>
+          <div>
+            <header className={styles.header}>
+              <h1>TODO</h1>
+            </header>
+            <main>
+              <TodoList />
+            </main>
+          </div>
         </div>
-      </div>
-    </AblyProvider>
+      </AblyProvider>
+    </IndexedDBProvider>
   );
 }
 

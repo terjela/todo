@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAbly } from "../providers/AblyProvider";
-import { useIndexedDb } from "./useIndexedDb";
+import { useIndexedDB } from "../providers/IndexedDBProvider";
 
 export interface Todo {
   id: string;
@@ -11,7 +11,7 @@ export interface Todo {
 
 export const useTodos = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const { db } = useIndexedDb();
+  const { db } = useIndexedDB();
   const { channel, clientId, connectedUsers } = useAbly();
 
   const shouldSync = connectedUsers > 1;
